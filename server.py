@@ -1,3 +1,8 @@
+"""
+This module sets up a Flask application that provides endpoints
+for analyzing emotions in a given text and returns the dominant emotion.
+"""
+
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -12,7 +17,7 @@ def emo_detector():
     '''
     # Retrieve the text to analyze from the request arguments
     text_to_analyze = request.args.get('textToAnalyze')
-    
+
     # Check if text is missing or empty
     if not text_to_analyze or text_to_analyze.strip() == "":
         return "Invalid text! Please try again!"
@@ -21,9 +26,9 @@ def emo_detector():
     response = emotion_detector(text_to_analyze)
 
     # Handle response when None returned
-    if response['dominant_emotion'] == None:
+    if response['dominant_emotion'] is None:
         return "Invalid text! Please try again!"
-    
+
     return (
         f"For the given statement, the system response is "
         f"'anger': {response['anger']}, 'disgust': {response['disgust']}, "
