@@ -12,9 +12,17 @@ def emo_detector():
     '''
     # Retrieve the text to analyze from the request arguments
     text_to_analyze = request.args.get('textToAnalyze')
+    
+    # Check if text is missing or empty
+    if not text_to_analyze or text_to_analyze.strip() == "":
+        return "Invalid text! Please try again!"
 
     # Pass the text to the emotion_detector function and store the response
     response = emotion_detector(text_to_analyze)
+
+    # Handle response when None returned
+    if response['dominant_emotion'] == None:
+        return "Invalid text! Please try again!"
     
     return (
         f"For the given statement, the system response is "
